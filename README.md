@@ -1,5 +1,6 @@
 # Interview Scheduler
 
+
 ## Setup
 
 Install dependencies with `npm install`.
@@ -9,6 +10,8 @@ Install dependencies with `npm install`.
 ```sh
 npm start
 ```
+
+http://localhost:8000/
 
 ## Running Jest Test Framework
 
@@ -21,3 +24,15 @@ npm test
 ```sh
 npm run storybook
 ```
+
+
+## Scheduler Project Breakdown
+
+![Components Map](./public/images/COMPONENT_MAP.png)
+
+![State](./STATE.md)
+
+![Components](./COMPONENTS.md)
+
+
+
