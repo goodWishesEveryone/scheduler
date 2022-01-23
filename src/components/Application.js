@@ -23,7 +23,7 @@ const days = [
 ];
 
 export default function Application(props) {
-  const [day, setDay] = useState("Monday");
+  const [day, setDay] = useState("Monday"); // default day state to "Monday"
   console.log(day);
 
   return (
@@ -37,12 +37,8 @@ export default function Application(props) {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          {/* Incorporate the DayList component and verify its behaviour of setting the current day by checking that the correct day was printed to the console. */}
-          <DayList
-            days={days}
-            day={"Monday"}
-            setDay={(day) => console.log(day)}
-          />
+          {/* Incorporate the DayList component and Passing day and days to <DayList> */}
+          <DayList days={days} day={day} setDay={setDay} />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
