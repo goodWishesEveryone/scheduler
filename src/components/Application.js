@@ -2,29 +2,28 @@
 import React, { useState } from "react";
 import "components/Application.scss";
 
-import DayList from "components/DayList";
+import DayList from "./DayList";
 
 const days = [
   {
     id: 1,
     name: "Monday",
-    spots: 2
+    spots: 2,
   },
   {
     id: 2,
     name: "Tuesday",
-    spots: 5
+    spots: 5,
   },
   {
     id: 3,
     name: "Wednesday",
-    spots: 0
-  }
+    spots: 0,
+  },
 ];
 
-
 export default function Application(props) {
-  const[day, setDay] = useState("Monday");
+  const [day, setDay] = useState("Monday");
   console.log(day);
 
   return (
@@ -38,7 +37,12 @@ export default function Application(props) {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          <DayList days={days} day={day} setDay={setDay} />
+          {/* Incorporate the DayList component and verify its behaviour of setting the current day by checking that the correct day was printed to the console. */}
+          <DayList
+            days={days}
+            day={"Monday"}
+            setDay={(day) => console.log(day)}
+          />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
@@ -47,8 +51,8 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
-        <section className="schedule "/>
+        {/* Replace this with the schedule elements during the "The Scheduler" activity. */}
+        <section className="schedule " />
       </section>
     </main>
   );
