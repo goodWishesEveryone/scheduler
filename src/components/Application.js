@@ -26,6 +26,10 @@ export default function Application(props) {
   const [day, setDay] = useState("Monday"); // default day state to "Monday"
   console.log(day);
 
+  const changeDay = (value) => {
+    return setDay(value);
+  };
+
   return (
     <main className="layout">
       <section className="sidebar">
@@ -38,7 +42,8 @@ export default function Application(props) {
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
           {/* Incorporate the DayList component and Passing day and days to <DayList> */}
-          <DayList days={days} day={day} setDay={setDay} />
+          <DayList days={days} day={day} setDay={changeDay} />
+      
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"

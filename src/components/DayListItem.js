@@ -3,9 +3,9 @@ import classNames from "classnames";
 import "components/DayListItem.scss";
 
 export default function DayListItem(props) {
-  let listClassNames = classNames("day-list__item", {
+  let dayClass = classNames("day-list__item", {
     "day-list__item--selected": props.selected,
-    "day-list__item--full": props.spots === 0
+    "day-list__item--full": props.spots === 0,
   });
 
   // function that will format the props.spots & making all tests pass
@@ -15,16 +15,27 @@ export default function DayListItem(props) {
       spotsRemaining = "no spots remaining";
     } else if (props.spots > 0) {
       spotsRemaining = `${props.spots}${
-        props.spots === 1 ? " spot " : " spots "
+        props.spots === 1 ? " spot" : " spots"
       } remaining`;
     }
     return spotsRemaining;
   };
 
+  //   return (
+  //     <li className={dayClass} onClick={() => props.setDay(props.name)}>
+  //       <h2 className="text--regular">{props.name}</h2>
+  //       <h3 className="text--light">{formatSpots()}</h3>
+  //     </li>
+  //   );
+
   return (
-    <li className={listClassNames} onClick={() => props.setDay(props.name)}>
+    <li
+      className={dayClass}
+      onClick={() => props.setDay(props.name)}
+      selected={props.selected}
+    >
       <h2 className="text--regular">{props.name}</h2>
-      <h3 className="text--light">{formatSpots()} spots remaining</h3>
+      <h3 className="text--light">{formatSpots()}</h3>
     </li>
   );
 }
