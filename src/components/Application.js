@@ -42,7 +42,7 @@ export default function Application(props) {
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
           {/* Incorporate the DayList component and Passing day and days to <DayList> */}
-          <DayList days={days} day={day} setDay={changeDay} />
+          <DayList days={days} value={day} onChange={changeDay} />
       
         </nav>
         <img
