@@ -1,4 +1,5 @@
-import React from "react";
+//import React from "react";
+import React, { Fragment } from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
@@ -17,7 +18,7 @@ import Show from "../src/components/Appointment/Show";
 import Confirm from "../src/components/Appointment/Confirm";
 import Status from "../src/components/Appointment/Status";
 import Error from "../src/components/Appointment/Error";
-
+import Form from "components/Appointment/Form";
 
 
 ////////////////    Button   ////////////////
@@ -71,9 +72,9 @@ const days = [
   },
 ];
 
-  storiesOf("DayList", module)
+storiesOf("DayList", module)
   .addParameters({
-    backgrounds: [{ name: "dark", value: "#222f3e", default: true }],  // dark shade of cyan-blue
+    backgrounds: [{ name: "dark", value: "#222f3e", default: true }], // dark shade of cyan-blue
   })
   .add("Monday", () => (
     <DayList days={days} value={"Monday"} onChange={action("setDay")} />
@@ -133,18 +134,11 @@ const interviewers = [
 
 storiesOf("InterviewerList", module)
   .addParameters({
-    backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
+    backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
   })
-  .add("Initial", () => (
-    <InterviewerList
-      interviewers={interviewers}
-    />
-  ))
+  .add("Initial", () => <InterviewerList interviewers={interviewers} />)
   .add("Selected", () => (
-    <InterviewerList
-      interviewers={interviewers}
-      value={3}
-    />
+    <InterviewerList interviewers={interviewers} value={3} />
   ))
   .add("Clickable", () => (
     <InterviewerList
@@ -153,52 +147,68 @@ storiesOf("InterviewerList", module)
     />
   ));
 
-
-
-  ////////////////////  --- Appointment ---  ////////////////////
+  
+////////////////////  --- Appointment ---  ////////////////////
 
 storiesOf("Appointment", module)
-.addParameters({
-  backgrounds: [{ name: "white", value: "#fff", default: true }],
-})
-.add("Appointment", () => <Appointment />)
-// passes the a time prop that is a string and set to "12pm".
-.add("Appointment with Time", () => <Appointment time="12pm" />)
-.add("Header", () => <Header time="12pm" />)
-.add("Empty", () => <Empty onAdd={action("onAdd")} />)
-.add("Show", () => (
-  <Show
-    student="Lydia Miller-Jones"
-    interviewer={interviewer}
-    onEdit={action("onEdit")}
-    onDelete={action("onDelete")}
-  />
-))
-.add("Confirm", () => (
-  <Confirm
-    message="Delete the appointment?"
-    onConfirm={action("onConfirm")}
-    onCancel={action("onCancel")}
-  />
-))
-.add("Status Delete", () => <Status message="Deleting" />)
-.add("Status Save", () => <Status message="Saving" />)
-.add("Error", () => (
-  <Error message="Could not delete appointment" onClose={action("onClose")} />
-))
-.add("Form Edit", () => (
-  <Form 
-    name=""
-    interviewers={interviewers}
-    interviewer={2}
-    onSave={action("onSave")}
-    onCancel={action("onCancel")}
-  />
-))
-.add("Form Create", () => (
-  <Form 
-    interviewers={interviewers}
-    onSave={action("onSave")}
-    onCancel={action("onCancel")}
-  />
-))
+  .addParameters({
+    backgrounds: [{ name: "white", value: "#fff", default: true }],
+  })
+  .add("Appointment", () => <Appointment />)
+  // passes the a time prop that is a string and set to "12pm".
+  .add("Appointment with Time", () => <Appointment time="12pm" />)
+  .add("Header", () => <Header time="12pm" />)
+  .add("Empty", () => <Empty onAdd={action("onAdd")} />)
+  .add("Show", () => (
+    <Show
+      student="Lydia Miller-Jones"
+      interviewer={interviewer}
+      onEdit={action("onEdit")}
+      onDelete={action("onDelete")}
+    />
+  ))
+  .add("Confirm", () => (
+    <Confirm
+      message="Delete the appointment?"
+      onConfirm={action("onConfirm")}
+      onCancel={action("onCancel")}
+    />
+  ))
+  .add("Status Delete", () => <Status message="Deleting" />)
+  .add("Status Save", () => <Status message="Saving" />)
+  .add("Error", () => (
+    <Error message="Could not delete appointment" onClose={action("onClose")} />
+  ))
+  .add("Form Edit", () => (
+    <Form
+      student=""
+      interviewer={2}
+      interviewers={interviewers}
+      onSave={action("onSave")}
+      onCancel={action("onCancel")}
+    />
+  ))
+  .add("Form Create", () => (
+    <Form
+      interviewers={interviewers}
+      onSave={action("onSave")}
+      onCancel={action("onCancel")}
+    />
+  ))
+  .add("Appointment Empty", () => (
+    <Fragment>
+      {/* don't want to allow bookings after 5PM and so we're not displaying any add buttons after our 4PM time slot */}
+      <Appointment id={1} time="4pm" />
+      <Appointment time="5pm" />
+    </Fragment>
+  ))
+  .add("Appointment Booked", () => (
+    <Fragment>
+      <Appointment
+        id={1}
+        time="4pm"
+        interview={{ student: "Lydia Miller-Jones", interviewer }}
+      />
+      <Appointment time="5pm" />
+    </Fragment>
+  ));
