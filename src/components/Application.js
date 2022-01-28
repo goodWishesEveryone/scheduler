@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+
 import "components/Application.scss";
 
 import DayList from "./DayList";
 import Appointment from "./Appointment";
-import { all } from "micromatch";
+import { getAppointmentsForDay } from "helpers/selectors";
 
 // mock data for appointments
 const appointments = [
@@ -17,12 +18,12 @@ const appointments = [
     time: "1pm",
     interview: {
       student: "Lydia Miller-Jones",
-      interviewer:{
+      interviewer: {
         id: 3,
         name: "Sylvia Palmer",
         avatar: "https://i.imgur.com/LpaY82x.png",
-      }
-    }
+      },
+    },
   },
   {
     id: 3,
@@ -33,42 +34,53 @@ const appointments = [
     time: "3pm",
     interview: {
       student: "Archie Andrews",
-      interviewer:{
+      interviewer: {
         id: 4,
         name: "Cohana Roy",
         avatar: "https://i.imgur.com/FK8V841.jpg",
-      }
-    }
+      },
+    },
   },
   {
     id: 5,
     time: "4pm",
-  }
+  },
 ];
 
 export default function Application(props) {
-  const [day, setDay] = useState("Monday"); // default day state to "Monday"
-  const [days, setDays] = useState([]);  //use useState to add a days state to the Application component; initialized as an empty array.
-  
-  console.log(day);
-  const changeDay = (value) => {
-    return setDay(value);
-  //const setDay = day => setDay({...state, day})
-  };
+  // const [day, setDay] = useState("Monday"); // default day state to "Monday"
+  // const [days, setDays] = useState([]);  //use useState to add a days state to the Application component; initialized as an empty array.
+
+  const [state, setState] = useState({
+    day: "Monday",
+    days: [],
+    // you may put the line below, but will have to remove/comment hardcoded appointments variable
+    appointments: {},
+  });
+
+  // setDay function updates the state with the new day
+  const setDay = (day) => setDay({ ...state, day });
+  // };
+
 
   useEffect(() => {
     Promise.all([
-      Promise.resolve(axios.get('http://localhost:8001/api/days')),
-      Promise.resolve(axios.get('http://localhost:8001/api/')),
-      Promise.resolve(axios.get('http://localhost:8001/api/interviewers'))
+      axios.get("/api/days"),
+      axios.get("/api/"),
+      axios.get("/api/interviewers"),
     ]).then((all) => {
-        setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers:all[2].data}));
-      })
-  }, [])
-  
-  const appointmentList = appointments.map((appointment) => {
-    return (
+      setState((prev) => ({
+        ...prev,
+        days: all[0].data,
+        appointments: all[1].data,
+        interviewers: all[2].data,
+      }));
+    });
+  }, []);
 
+  const appointmentList = appointments.map((appointment) => {
+
+    return (
       // The Scheduler activity
       // <Appointment key={appointment.id} {...appointment} />
 
@@ -93,7 +105,8 @@ export default function Application(props) {
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
           {/* Incorporate the DayList component and Passing day and days to <DayList> */}
-          <DayList days={days} value={day} onChange={changeDay} />
+          {/* <DayList days={days} value={day} onChange={changeDay} /> */}
+          <DayList days={state.days} day={state.day} setDay={setDay} />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
