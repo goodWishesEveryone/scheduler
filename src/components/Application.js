@@ -7,46 +7,6 @@ import DayList from "./DayList";
 import Appointment from "./Appointment";
 import { getAppointmentsForDay } from "helpers/selectors";
 
-// mock data for appointments
-const appointments = [
-  {
-    id: 1,
-    time: "12pm",
-  },
-  {
-    id: 2,
-    time: "1pm",
-    interview: {
-      student: "Lydia Miller-Jones",
-      interviewer: {
-        id: 3,
-        name: "Sylvia Palmer",
-        avatar: "https://i.imgur.com/LpaY82x.png",
-      },
-    },
-  },
-  {
-    id: 3,
-    time: "2pm",
-  },
-  {
-    id: 4,
-    time: "3pm",
-    interview: {
-      student: "Archie Andrews",
-      interviewer: {
-        id: 4,
-        name: "Cohana Roy",
-        avatar: "https://i.imgur.com/FK8V841.jpg",
-      },
-    },
-  },
-  {
-    id: 5,
-    time: "4pm",
-  },
-];
-
 export default function Application(props) {
   // const [day, setDay] = useState("Monday"); // default day state to "Monday"
   // const [days, setDays] = useState([]);  //use useState to add a days state to the Application component; initialized as an empty array.
@@ -58,15 +18,18 @@ export default function Application(props) {
     appointments: {},
   });
 
+  const dailyAppointments = [];
+
   // setDay function updates the state with the new day
   const setDay = (day) => setDay({ ...state, day });
   // };
 
 
   useEffect(() => {
+    // Promise.all will run many promises concurrently and when all the Promises resolved, it updates the state
     Promise.all([
       axios.get("/api/days"),
-      axios.get("/api/"),
+      axios.get("/api/appointments"),
       axios.get("/api/interviewers"),
     ]).then((all) => {
       setState((prev) => ({
@@ -78,8 +41,12 @@ export default function Application(props) {
     });
   }, []);
 
-  const appointmentList = appointments.map((appointment) => {
+  // calling getAppointmentsForDay until after both the days and the appointments are downloaded and set as state
+  //dailyAppointments = getAppointmentsForDay(state, state.day);
+  const interviewers = getAppointmentsForDay(state, state.day);
 
+  const appointmentList = dailyAppointments.map((appointment) => {
+    
     return (
       // The Scheduler activity
       // <Appointment key={appointment.id} {...appointment} />
@@ -89,6 +56,7 @@ export default function Application(props) {
         id={appointment.id}
         time={appointment.time}
         interview={appointment.interview}
+        interviewers={interviewers}
       />
     );
   });
