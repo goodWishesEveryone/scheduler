@@ -5,7 +5,7 @@ import "components/Application.scss";
 
 import DayList from "./DayList";
 import Appointment from "./Appointment";
-import { getAppointmentsForDay } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview } from "helpers/selectors";
 
 export default function Application(props) {
   // const [day, setDay] = useState("Monday"); // default day state to "Monday"
@@ -43,10 +43,12 @@ export default function Application(props) {
 
   // calling getAppointmentsForDay until after both the days and the appointments are downloaded and set as state
   //dailyAppointments = getAppointmentsForDay(state, state.day);
+
+  const appointments = getAppointmentsForDay(state, state.day);
   const interviewers = getAppointmentsForDay(state, state.day);
 
-  const appointmentList = dailyAppointments.map((appointment) => {
-    
+  const appointmentList = appointments.map((appointment) => {
+    const interview = getInterview(state, appointment.interview);
     return (
       // The Scheduler activity
       // <Appointment key={appointment.id} {...appointment} />
