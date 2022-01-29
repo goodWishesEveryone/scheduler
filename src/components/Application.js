@@ -5,7 +5,7 @@ import "components/Application.scss";
 
 import DayList from "./DayList";
 import Appointment from "./Appointment";
-import { getAppointmentsForDay, getInterview } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay} from "helpers/selectors";
 
 export default function Application(props) {
   // const [day, setDay] = useState("Monday"); // default day state to "Monday"
@@ -18,10 +18,10 @@ export default function Application(props) {
     appointments: {},
   });
 
-  const dailyAppointments = [];
+  //const dailyAppointments = [];
 
   // setDay function updates the state with the new day
-  const setDay = (day) => setDay({ ...state, day });
+  const setDay = day => setState({ ...state, day });
   // };
 
 
@@ -45,7 +45,7 @@ export default function Application(props) {
   //dailyAppointments = getAppointmentsForDay(state, state.day);
 
   const appointments = getAppointmentsForDay(state, state.day);
-  const interviewers = getAppointmentsForDay(state, state.day);
+  const interviewers = getInterviewersForDay(state, state.day);
 
   const appointmentList = appointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
@@ -63,6 +63,7 @@ export default function Application(props) {
     );
   });
 
+ 
   return (
     <main className="layout">
       <section className="sidebar">
