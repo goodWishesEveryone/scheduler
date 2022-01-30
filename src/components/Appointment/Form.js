@@ -24,8 +24,11 @@ export default function Form(props) {
 
   //function used to validate a form to ensure there is a student name before calling the onSave function from props
   const validate = () => {
-    if (student === "") {
+    if (!student) {
       setError("Student name cannot be blank");
+      return;
+    } else if (!interviewer) {
+      setError("Interviewer cannot be blank");
       return;
     }
     setError("");
@@ -35,21 +38,18 @@ export default function Form(props) {
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
-
         {/* event.preventDefault() prevents the default behavior of pressing the Enter key (refresh the page) */}
+        <section className="appointment__validation">{error}</section>
         <form onSubmit={(event) => event.preventDefault()} autoComplete="off">
           <input
             className="appointment__create-input text--semi-bold"
             student="student"
             type="text"
+            value={student}
             placeholder="Enter Student Name"
-            
-            // controlled component code
-            
+            onInput={(e) => setStudent(e.target.value)}
           />
-          <section className="appointment__validation">{error}</section>
         </form>
-
         <InterviewerList
           interviewers={props.interviewers}
           value={interviewer}

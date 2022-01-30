@@ -5,7 +5,11 @@ import "components/Application.scss";
 
 import DayList from "./DayList";
 import Appointment from "./Appointment";
-import { getAppointmentsForDay, getInterview, getInterviewersForDay} from "helpers/selectors";
+import {
+  getAppointmentsForDay,
+  getInterview,
+  getInterviewersForDay,
+} from "helpers/selectors";
 
 export default function Application(props) {
   // const [day, setDay] = useState("Monday"); // default day state to "Monday"
@@ -21,9 +25,8 @@ export default function Application(props) {
   //const dailyAppointments = [];
 
   // setDay function updates the state with the new day
-  const setDay = day => setState({ ...state, day });
+  const setDay = (day) => setState({ ...state, day });
   // };
-
 
   useEffect(() => {
     // Promise.all will run many promises concurrently and when all the Promises resolved, it updates the state
@@ -41,29 +44,49 @@ export default function Application(props) {
     });
   }, []);
 
+  function bookInterview(id, interview) {
+    // console.log(id, interview);
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview },
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
+
+    setState({
+      ...state,
+      appointments,
+    });
+
+    return axios.put(`/api/appointments/${id}`, { interview }).then((res) => {
+      setState((prev) => ({ ...prev, appointments }));
+    });
+  }
+
   // calling getAppointmentsForDay until after both the days and the appointments are downloaded and set as state
   //dailyAppointments = getAppointmentsForDay(state, state.day);
-
+  //console.log('state', state);
   const appointments = getAppointmentsForDay(state, state.day);
   const interviewers = getInterviewersForDay(state, state.day);
 
-  const appointmentList = appointments.map((appointment) => {
-    const interview = getInterview(state, appointment.interview);
-    return (
-      // The Scheduler activity
-      // <Appointment key={appointment.id} {...appointment} />
+  console.log(appointments, interviewers);
 
+  const appointmentList = appointments.map((appointment) => {
+    return (
       <Appointment
         key={appointment.id}
         id={appointment.id}
+        state={state}
         time={appointment.time}
         interview={appointment.interview}
         interviewers={interviewers}
+        bookInterview={bookInterview}
       />
     );
   });
 
- 
   return (
     <main className="layout">
       <section className="sidebar">
