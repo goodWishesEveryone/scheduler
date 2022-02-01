@@ -1,5 +1,7 @@
 // selector, is a function that accepts state as an argument and returns data that is derived from that state.
 
+import { object } from "prop-types";
+
 //////////////////  ---  getAppointmentsForDay  ---  ///////////////////
 // will return an array of appointments for the given day
 
@@ -15,9 +17,9 @@ export function getAppointmentsForDay(state, day) {
     filteredAppointments.forEach((appointmentId) => {
       if (state.appointments[appointmentId]) {
         const appointment = state.appointments[appointmentId];
-        console.log('appointment:', appointment)
-        if(appointment.interview){
-          appointment.interview.interviewer = state.interviewers[appointment.interview.interviewer];
+        if (appointment.interview) {
+          appointment.interview.interviewer =
+            state.interviewers[appointment.interview.interviewer];
         }
 
         appointments.push(appointment);
@@ -31,16 +33,22 @@ export function getAppointmentsForDay(state, day) {
 // will return a new object containing the interview data when we pass it an object that contains the interviewer; Otherwise, returns null.
 
 export function getInterview(state, interview) {
-  if (!interview) {
+  if (!interview || interview === null) {
     return null;
   }
-
-  const interviewObj = {
-    student: interview.student,
-    interviewer: state.interviewers[interview.interviewer],
-  };
-
+let interviewObj = {};
+    interviewObj = {
+      student: interview.student,
+      interviewer: interview.interviewer
+    };
+  
   return interviewObj;
+  // return (
+  //   interview && {
+  //     ...interview,
+  //     interviewer: state.interviewers[interview.interviewer],
+  //   }
+  // );
 }
 
 //////////////////  ---  getInterviewersForDay  ---  //////////////////
@@ -55,9 +63,9 @@ export function getInterviewersForDay(state, day) {
   let interviewer = [];
 
   if (filteredInterviewers.length) {
-    filteredInterviewers.forEach((interviwerId) => {
-      if (state.interviewers[interviwerId]) {
-        interviewer.push(state.interviewers[interviwerId]);
+    filteredInterviewers.forEach((interviewerId) => {
+      if (state.interviewers[interviewerId]) {
+        interviewer.push(state.interviewers[interviewerId]);
       }
     });
   }
