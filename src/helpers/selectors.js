@@ -6,27 +6,38 @@ import { object } from "prop-types";
 // will return an array of appointments for the given day
 
 export function getAppointmentsForDay(state, day) {
-  const filteredAppointments = state.days
-    .filter((date) => date.name === day)
-    .map((day) => day.appointments)
-    .flat();
+  const foundDay = state.days.find(weekDay => {
+    return weekDay.name === day;}
+    )
+    if(!foundDay) {
+      return [];
+    }
+    const mapAppointmentForFoundDay = foundDay.appointments.map((appointment) => {
+      return state.appointments[appointment];
+    })
+    return mapAppointmentForFoundDay;
 
-  let appointments = [];
+//   const filteredAppointments = state.days
+//     .filter((date) => date.name === day)
+//     .map((day) => day.appointments)
+//     .flat();
 
-  if (filteredAppointments.length) {
-    filteredAppointments.forEach((appointmentId) => {
-      if (state.appointments[appointmentId]) {
-        const appointment = state.appointments[appointmentId];
-        if (appointment.interview) {
-          appointment.interview.interviewer =
-            state.interviewers[appointment.interview.interviewer];
-        }
+//   let appointments = [];
 
-        appointments.push(appointment);
-      }
-    });
-  }
-  return appointments;
+//   if (filteredAppointments.length) {
+//     filteredAppointments.forEach((appointmentId) => {
+//       if (state.appointments[appointmentId]) {
+//         console.log("getAppointmentsForDay", state.appointments[appointmentId], appointmentId)
+//         const appointment = state.appointments[appointmentId];
+//         if (appointment.interview) {
+//           appointment.interview.interviewer =
+//             state.interviewers[appointment.interview.interviewer];
+//         }
+//         appointments.push(appointment);
+//       }
+//     });
+//   }
+//   return appointments;
 }
 
 //////////////////  ---  getInterview  ---  //////////////////
@@ -36,29 +47,24 @@ export function getInterview(state, interview) {
   if (!interview || interview === null) {
     return null;
   }
-let interviewObj = {};
-    interviewObj = {
-      student: interview.student,
-      interviewer: interview.interviewer
-    };
-  
-  return interviewObj;
-  // return (
-  //   interview && {
-  //     ...interview,
-  //     interviewer: state.interviewers[interview.interviewer],
-  //   }
-  // );
+  const newInterview = {
+    "student": interview.student,
+    "interviewer": state.interviewers[interview.interviewer]
+
+  }
+  return newInterview;
 }
 
 //////////////////  ---  getInterviewersForDay  ---  //////////////////
 // to create an interviewers array that will first be passed to the Appointment component and then passed down to the Form component
 
 export function getInterviewersForDay(state, day) {
-  const filteredInterviewers = state.days
-    .filter((date) => date.name === day)
-    .map((day) => day.interviewers)
-    .flat();
+  let filteredInterviewers = state.days.find(date => date.name === day);
+  filteredInterviewers = filteredInterviewers.interviewers;
+  // const filteredInterviewers = state.days
+  //   .filter((date) => date.name === day)
+  //   .map((day) => day.interviewers)
+  //   .flat();
 
   let interviewer = [];
 
@@ -71,3 +77,4 @@ export function getInterviewersForDay(state, day) {
   }
   return interviewer;
 }
+

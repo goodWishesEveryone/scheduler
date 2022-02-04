@@ -22,6 +22,7 @@ export default function useApplicationData() {
 
   // Promise.all will run many promises concurrently and when all the Promises resolved, it updates the state
   useEffect(() => {
+    console.log('called useEffect')
     Promise.all([
       axios.get("/api/days"),
       axios.get("/api/appointments"),
@@ -40,24 +41,24 @@ export default function useApplicationData() {
       });
   }, []);
 
+
+
   function bookInterview(id, interview) {
-    // console.log(id, interview);
     const appointment = {
       ...state.appointments[id],
-      interview: { ...interview },
+      interview: { ...interview }
     };
+
     const appointments = {
       ...state.appointments,
       [id]: appointment,
     };
 
-    setState({
-      ...state,
-      appointments,
-    });
-
     return axios.put(`/api/appointments/${id}`, appointment).then((res) => {
-      setState((prev) => ({ ...prev, appointments }));
+      setState({
+        ...state,
+        appointments
+      });
     });
   }
 
@@ -71,16 +72,11 @@ export default function useApplicationData() {
       [id]: appointment,
     };
 
-    setState({
-      ...state,
-      appointments,
-    });
-
     return axios.delete(`/api/appointments/${id}`, appointment).then((res) => {
-      setState((prev) => ({
-        ...prev,
-        appointments,
-      }));
+      setState({
+        ...state,
+        appointments
+      });
     });
   }
 
@@ -98,9 +94,11 @@ export default function useApplicationData() {
   //   spotsRemaining();
   // }, [state.appointments]);
 
+
+
+
   return {
     state,
-    //setState,
     setDay,
     bookInterview,
     cancelInterview,
