@@ -1,6 +1,7 @@
 // hold all logic for each Appointment components
 
-import React, { useState, useEffect } from "react";
+import React from "react";
+// import React, { useState, useEffect } from "react";
 import "./styles.scss";
 
 import Header from "./Header";
@@ -11,7 +12,7 @@ import Confirm from "./Confirm";
 import Error from "./Error";
 import Form from "./Form";
 import useVisualMode from "hooks/useVisualMode";
-import { getInterview } from "../../helpers/selectors";
+// import { getInterview } from "../../helpers/selectors";
 
 
 const EMPTY = "EMPTY";
@@ -26,22 +27,17 @@ const ERROR_DELETE = "ERROR_DELETE";
 const DELETING = "DELETING";
 
 export default function Appointment(props) {
-  const { id, time, interview, state, interviewers } = props;
+  const { id, time, interview, interviewers } = props;
   const { mode, transition, back } = useVisualMode(
     interview ? SHOW : EMPTY
   );
-  const [interviewer, setInterviewer] = useState({});
-  const [student, setStudent] = useState("");
 
-  useEffect(() => {
-    if (interview) {
-      setInterviewer(interview.interviewer);
-      setStudent(interview.student);
-    }
-  }, [interview]);
+  // const student = interview && interview.student ? interview.student : '';
+  // const interviewer = interview && interview.interviewer ? interview.interviewer : null;
 
   //////////////////  -- SAVE --  ///////////////
   function save(name, interviewer) {
+    console.log("INTERVIEWER IN SAVE", interviewer)
     const interview = {
       student: name,
       interviewer,
@@ -51,17 +47,9 @@ export default function Appointment(props) {
     props
       .bookInterview(id, interview)
       .then(() => {
-        const intv = getInterview(state, interview);
-        setStudent(intv.student);
-        setInterviewer(intv.interviewer);
-
         transition(SHOW);
       })
       .catch((error) => transition(ERROR_SAVE, true));
-    // props
-    //   .bookInterview(id, interview)
-    //   .then(() => transition(SHOW))
-    //   .catch((error) => transition(ERROR_SAVE, true));
   }
 
   //////////////////  -- cancelInterview --  ///////////////
@@ -73,25 +61,14 @@ export default function Appointment(props) {
       .then(() => transition(EMPTY))
       .catch((error) => transition(ERROR_DELETE, true));
   }
-
-  // //////////////////  -- confirmRemove --  ///////////////
-  // function confirmRemove() {
-  //   transition(CONFIRM);
-  // }
-  // //////////////////  -- onEdit --  ///////////////
-  // function onEdit() {
-  //   transition(EDIT);
-  // }
-  // function edit() {
-  //   transition(EDIT);
-  // }
+console.log("this is interview", interview);
   return (
     <article className="appointment">
       <Header time={time} />
       {mode === SHOW && (
         <Show
-          student={student}
-          interviewer={interviewer}
+          student={interview.student}
+          interviewer={interview.interviewer}
           id={id}
           onDelete={() => transition(CONFIRM)}
           onEdit={() => transition(EDIT)}
@@ -118,16 +95,18 @@ export default function Appointment(props) {
       )}
       {mode === EDIT && (
         <Form
-          student={student}
+          student={interview.student}
           interviewers={interviewers}
-          interviewer={interview.interviewer && interview.interviewer.id}
-          // interviewer={interview.interviewer.id}
+          interviewer={interview.interviewer.id}
           onCancel={back}
           onSave={save}
         />
       )}
       {mode === ERROR_SAVE && (
-        <Error onClose={() => back()} message={"Could not save appointment."} />
+        <Error 
+          onClose={() => back()} 
+          message={"Could not save appointment."} 
+        />
       )}
       {mode === ERROR_DELETE && (
         <Error

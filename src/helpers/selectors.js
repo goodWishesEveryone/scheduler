@@ -6,27 +6,16 @@ import { object } from "prop-types";
 // will return an array of appointments for the given day
 
 export function getAppointmentsForDay(state, day) {
-  const filteredAppointments = state.days
-    .filter((date) => date.name === day)
-    .map((day) => day.appointments)
-    .flat();
-
-  let appointments = [];
-
-  if (filteredAppointments.length) {
-    filteredAppointments.forEach((appointmentId) => {
-      if (state.appointments[appointmentId]) {
-        const appointment = state.appointments[appointmentId];
-        if (appointment.interview) {
-          appointment.interview.interviewer =
-            state.interviewers[appointment.interview.interviewer];
-        }
-
-        appointments.push(appointment);
-      }
-    });
+  const foundDay = state.days.find((weekDay) => {
+    return weekDay.name === day;
+  });
+  if (!foundDay) {
+    return [];
   }
-  return appointments;
+  const mapAppointmentForFoundDay = foundDay.appointments.map((appointment) => {
+    return state.appointments[appointment];
+  });
+  return mapAppointmentForFoundDay;
 }
 
 //////////////////  ---  getInterview  ---  //////////////////
@@ -36,29 +25,23 @@ export function getInterview(state, interview) {
   if (!interview || interview === null) {
     return null;
   }
-let interviewObj = {};
-    interviewObj = {
-      student: interview.student,
-      interviewer: interview.interviewer
-    };
-  
-  return interviewObj;
-  // return (
-  //   interview && {
-  //     ...interview,
-  //     interviewer: state.interviewers[interview.interviewer],
-  //   }
-  // );
+  const newInterview = {
+    student: interview.student,
+    interviewer: state.interviewers[interview.interviewer],
+  };
+  return newInterview;
 }
 
 //////////////////  ---  getInterviewersForDay  ---  //////////////////
 // to create an interviewers array that will first be passed to the Appointment component and then passed down to the Form component
 
 export function getInterviewersForDay(state, day) {
-  const filteredInterviewers = state.days
-    .filter((date) => date.name === day)
-    .map((day) => day.interviewers)
-    .flat();
+  let filteredInterviewers = state.days.find((date) => date.name === day);
+  filteredInterviewers = filteredInterviewers.interviewers;
+  // const filteredInterviewers = state.days
+  //   .filter((date) => date.name === day)
+  //   .map((day) => day.interviewers)
+  //   .flat();
 
   let interviewer = [];
 
@@ -70,4 +53,36 @@ export function getInterviewersForDay(state, day) {
     });
   }
   return interviewer;
+}
+
+////////////    ---  getSpotsForDay  ---  ////////////
+const getSpotsForDay = function (day, appointments) {
+  let spots = 0;
+  // iterate the day's appointment id's
+  for (const id of day.appointments) {
+    const appointment = appointments[id];
+    if (!appointment.interview) {
+      spots++;
+    }
+  }
+  return spots;
+};
+
+////////////    ---  updateSpots  ---  ////////////
+/**
+ * Update Spots for current day
+ * @param {Object}   state           State Object.
+ * @param {Object}   appointments    New Appointments array
+ * @param {Object}   id              Optional appointment id
+ * @return {Array}   A Days array we can save back into state.
+ */
+
+export function updateSpots(state, appointments, id) {
+  // get the day object
+  const dayObj = state.days.find((day) => day.name === state.day);
+  const spots = getSpotsForDay(dayObj, appointments);
+  const day = { ...dayObj, spots };
+
+  // return an updated days array, we can save back into state
+  return state.days.map((d) => (d.name === state.day ? day : d));
 }
