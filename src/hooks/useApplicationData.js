@@ -18,7 +18,6 @@ export default function useApplicationData() {
   });
 
   // setDay function updates the state with the new day
-  //const setDay = (day) => setState((prevState) => ({ ...prevState, day }));
   const setDay = (day) => setState((prev) => ({ ...prev, day }));
 
   // Promise.all will run many promises concurrently and when all the Promises resolved, it updates the state
