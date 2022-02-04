@@ -18,16 +18,16 @@ export function getAppointmentsForDay(state, day) {
   });
   return mapAppointmentForFoundDay;
 
-  const foundDay = state.days.find(weekDay => {
-    return weekDay.name === day;}
-    )
-    if(!foundDay) {
-      return [];
-    }
-    const mapAppointmentForFoundDay = foundDay.appointments.map((appointment) => {
-      return state.appointments[appointment];
-    })
-    return mapAppointmentForFoundDay;
+  // const foundDay = state.days.find(weekDay => {
+  //   return weekDay.name === day;}
+  //   )
+  //   if(!foundDay) {
+  //     return [];
+  //   }
+  //   const mapAppointmentForFoundDay = foundDay.appointments.map((appointment) => {
+  //     return state.appointments[appointment];
+  //   })
+  //   return mapAppointmentForFoundDay;
 
 }
 
@@ -39,11 +39,6 @@ export function getInterview(state, interview) {
     return null;
   }
   const newInterview = {
-
-    student: interview.student,
-    interviewer: state.interviewers[interview.interviewer],
-  };
-
     "student": interview.student,
     "interviewer": state.interviewers[interview.interviewer]
 
@@ -58,7 +53,7 @@ export function getInterviewersForDay(state, day) {
 
   let filteredInterviewers = state.days.find((date) => date.name === day);
 
-  let filteredInterviewers = state.days.find(date => date.name === day);
+  // let filteredInterviewers = state.days.find(date => date.name === day);
 
   filteredInterviewers = filteredInterviewers.interviewers;
   // const filteredInterviewers = state.days
