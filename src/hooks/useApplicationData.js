@@ -64,7 +64,7 @@ export default function useApplicationData() {
         appointments, 
         days: newDays
 
-        appointments
+        
       });
     });
   }
@@ -88,7 +88,7 @@ export default function useApplicationData() {
         appointments,
         days: newDays
 
-        appointments
+        
       });
     });
   }
@@ -101,3 +101,4 @@ export default function useApplicationData() {
     cancelInterview,
   };
 }
+
