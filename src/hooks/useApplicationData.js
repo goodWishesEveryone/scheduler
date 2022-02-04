@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { updateSpots } from "helpers/selectors";
 
 /////////////////////  CUSTOM HOOK  ///////////////////////
 // useApplicationData will be responsible for loading the initial data from the API, and when any of the provided actions are called the state updates, causing the component to render.
@@ -54,9 +55,15 @@ export default function useApplicationData() {
       [id]: appointment,
     };
 
+    const newDays = updateSpots(state, appointments)
+
+
     return axios.put(`/api/appointments/${id}`, appointment).then((res) => {
       setState({
         ...state,
+        appointments, 
+        days: newDays
+
         appointments
       });
     });
@@ -72,29 +79,19 @@ export default function useApplicationData() {
       [id]: appointment,
     };
 
+    const newDays = updateSpots(state, appointments)
+
+
     return axios.delete(`/api/appointments/${id}`, appointment).then((res) => {
       setState({
         ...state,
+        appointments,
+        days: newDays
+
         appointments
       });
     });
   }
-
-  // useEffect(() => {
-  //   const spotsRemaining = () => {
-  //     state.days.forEach((day) => {
-  //       const newSpotsRemaining = day.appointments
-  //         .map((apptId) => state.appointments[apptId].interview)
-  //         .filter((item) => item === null).length;
-
-  //       setSpotsForDay(day.name, newSpotsRemaining);
-  //     });
-  //   };
-
-  //   spotsRemaining();
-  // }, [state.appointments]);
-
-
 
 
   return {
