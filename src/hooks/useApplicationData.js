@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { updateSpots } from "helpers/selectors";
 
 /////////////////////  CUSTOM HOOK  ///////////////////////
 // useApplicationData will be responsible for loading the initial data from the API, and when any of the provided actions are called the state updates, causing the component to render.
@@ -22,6 +23,7 @@ export default function useApplicationData() {
 
   // Promise.all will run many promises concurrently and when all the Promises resolved, it updates the state
   useEffect(() => {
+    console.log('called useEffect')
     Promise.all([
       axios.get("/api/days"),
       axios.get("/api/appointments"),
@@ -40,24 +42,26 @@ export default function useApplicationData() {
       });
   }, []);
 
+
+
   function bookInterview(id, interview) {
-    // console.log(id, interview);
     const appointment = {
       ...state.appointments[id],
-      interview: { ...interview },
+      interview: { ...interview }
     };
+
     const appointments = {
       ...state.appointments,
       [id]: appointment,
     };
-
-    setState({
-      ...state,
-      appointments,
-    });
+    const newDays = updateSpots(state, appointments)
 
     return axios.put(`/api/appointments/${id}`, appointment).then((res) => {
-      setState((prev) => ({ ...prev, appointments }));
+      setState({
+        ...state,
+        appointments, 
+        days: newDays
+      });
     });
   }
 
@@ -70,37 +74,20 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment,
     };
-
-    setState({
-      ...state,
-      appointments,
-    });
+    const newDays = updateSpots(state, appointments)
 
     return axios.delete(`/api/appointments/${id}`, appointment).then((res) => {
-      setState((prev) => ({
-        ...prev,
+      setState({
+        ...state,
         appointments,
-      }));
+        days: newDays
+      });
     });
   }
 
-  // useEffect(() => {
-  //   const spotsRemaining = () => {
-  //     state.days.forEach((day) => {
-  //       const newSpotsRemaining = day.appointments
-  //         .map((apptId) => state.appointments[apptId].interview)
-  //         .filter((item) => item === null).length;
-
-  //       setSpotsForDay(day.name, newSpotsRemaining);
-  //     });
-  //   };
-
-  //   spotsRemaining();
-  // }, [state.appointments]);
 
   return {
     state,
-    //setState,
     setDay,
     bookInterview,
     cancelInterview,
