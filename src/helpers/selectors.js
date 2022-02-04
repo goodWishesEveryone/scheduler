@@ -7,6 +7,7 @@ import { object } from "prop-types";
 // Gets all appointments for a given day and will return an array of appointments for the given day
 
 export function getAppointmentsForDay(state, day) {
+
   const foundDay = state.days.find((weekDay) => {
     return weekDay.name === day;
   });
@@ -28,9 +29,10 @@ export function getInterview(state, interview) {
     return null;
   }
   const newInterview = {
-    student: interview.student,
-    interviewer: state.interviewers[interview.interviewer],
-  };
+    "student": interview.student,
+    "interviewer": state.interviewers[interview.interviewer]
+
+  }
   return newInterview;
 }
 
@@ -40,10 +42,11 @@ export function getInterview(state, interview) {
 // create an interviewers array that will first be passed to the Appointment component and then passed down to the Form component
 
 export function getInterviewersForDay(state, day) {
+
   let filteredInterviewers = state.days.find((date) => date.name === day);
 
   filteredInterviewers = filteredInterviewers.interviewers;
-
+ 
   let interviewer = [];
 
   if (filteredInterviewers.length) {
@@ -88,3 +91,4 @@ export function updateSpots(state, appointments, id) {
   // return an updated days array
   return state.days.map((d) => (d.name === state.day ? day : d));
 }
+

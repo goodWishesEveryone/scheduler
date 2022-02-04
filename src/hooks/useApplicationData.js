@@ -42,20 +42,20 @@ export default function useApplicationData() {
         console.log("Encountered an error :", err);
       });
   }, []);
-  
+
   //////////////// --- bookInterview --- /////////////////
-  
+
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview },
     };
-    
+
     const appointments = {
       ...state.appointments,
       [id]: appointment,
     };
-    
+
     // update spots remaining
     const newDays = updateSpots(state, appointments);
 
@@ -79,7 +79,7 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment,
     };
-    
+
     // update spots remaining
     const newDays = updateSpots(state, appointments);
 
