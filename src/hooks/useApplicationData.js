@@ -18,10 +18,10 @@ export default function useApplicationData() {
   });
 
   // setDay function updates the state with the new day
-  //const setDay = (day) => setState((prevState) => ({ ...prevState, day }));
   const setDay = (day) => setState((prev) => ({ ...prev, day }));
 
   // Promise.all will run many promises concurrently and when all the Promises resolved, it updates the state
+  // Axios retrieves data from db to populate Appointments, Interviewers and Days
   useEffect(() => {
     console.log('called useEffect')
     Promise.all([
@@ -41,7 +41,6 @@ export default function useApplicationData() {
         console.log("Encountered an error :", err);
       });
   }, []);
-
 
 
   function bookInterview(id, interview) {
@@ -65,6 +64,8 @@ export default function useApplicationData() {
     });
   }
 
+  //////////////// --- cancelInterview --- /////////////////
+
   function cancelInterview(id) {
     const appointment = {
       ...state.appointments[id],
@@ -84,7 +85,6 @@ export default function useApplicationData() {
       });
     });
   }
-
 
   return {
     state,
