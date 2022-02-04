@@ -70,7 +70,8 @@ const getSpotsForDay = function (day, appointments) {
   return spots;
 };
 
-////////////    ---  updateSpots  ---  ////////////
+/////////////////  ---  updateSpots  ---  ///////////////
+// update the spots when we book or cancel an interview
 /**
  * Update Spots for current day
  * @param {Object}   state           State Object.
@@ -78,7 +79,6 @@ const getSpotsForDay = function (day, appointments) {
  * @param {Object}   id              Optional appointment id
  * @return {Array}   A Days array we can save back into state.
  */
-
 export function updateSpots(state, appointments, id) {
   // get the day object
   const dayObj = state.days.find((day) => day.name === state.day);
