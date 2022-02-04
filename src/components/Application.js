@@ -1,35 +1,40 @@
-// import React from "react";
-import React, { useState } from "react";
+import React from "react";
 import "components/Application.scss";
-
 import DayList from "./DayList";
+import Appointment from "./Appointment";
+import {
+  getAppointmentsForDay,
+  getInterview,
+  getInterviewersForDay,
+} from "helpers/selectors";
+import useApplicationData from "hooks/useApplicationData";
 
-const days = [
-  {
-    id: 1,
-    name: "Monday",
-    spots: 2,
-  },
-  {
-    id: 2,
-    name: "Tuesday",
-    spots: 5,
-  },
-  {
-    id: 3,
-    name: "Wednesday",
-    spots: 0,
-  },
-];
+function Application(props) {
+  const { state, setDay, bookInterview, cancelInterview } =
+    useApplicationData();
 
-export default function Application(props) {
-  const [day, setDay] = useState("Monday");
-  console.log(day);
+  const bookAppointments = getAppointmentsForDay(state, state.day);
+
+  const appointments = bookAppointments.map((appointment) => {
+    const interviewers = getInterviewersForDay(state, state.day);
+    console.log("appointments in map", appointment.interview, appointment.id);
+    return (
+      <Appointment
+        key={appointment.id}
+        {...appointment}
+        time={appointment.time}
+        interview={getInterview(state, appointment.interview)}
+        // interview={appointment.interview}
+        interviewers={interviewers}
+        bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
+      />
+    );
+  });
 
   return (
     <main className="layout">
       <section className="sidebar">
-        {/* Replace this with the sidebar elements during the "Project Setup & Familiarity" activity. */}
         <img
           className="sidebar--centered"
           src="images/logo.png"
@@ -37,12 +42,7 @@ export default function Application(props) {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          {/* Incorporate the DayList component and verify its behaviour of setting the current day by checking that the correct day was printed to the console. */}
-          <DayList
-            days={days}
-            day={"Monday"}
-            setDay={(day) => console.log(day)}
-          />
+          <DayList days={state.days} day={state.day} setDay={setDay} />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
@@ -51,9 +51,10 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {/* Replace this with the schedule elements during the "The Scheduler" activity. */}
-        <section className="schedule " />
+        {appointments}
+        <Appointment key="last" time="5PM" />
       </section>
     </main>
   );
 }
+export default Application;
