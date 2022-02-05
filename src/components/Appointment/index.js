@@ -12,14 +12,11 @@ import Confirm from "./Confirm";
 import Error from "./Error";
 import Form from "./Form";
 import useVisualMode from "hooks/useVisualMode";
-// import { getInterview } from "../../helpers/selectors";
-
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVING = "SAVING";
-//const DELETE = "DELETE";
 const EDIT = "EDIT";
 const CONFIRM = "CONFIRM";
 const ERROR_SAVE = "ERROR_SAVE";
