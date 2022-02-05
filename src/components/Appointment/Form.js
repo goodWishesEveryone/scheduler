@@ -13,7 +13,7 @@ export default function Form(props) {
   //function used to reset the form student and interviewer fields, when the user clicks the Cancel button, it clears the form values
   const reset = () => {
     setStudent("");
-    // setInterviewer(1);
+    setError("");
     setInterviewer(null);
   };
 
@@ -22,14 +22,15 @@ export default function Form(props) {
     reset();
     props.onCancel();
   };
-  //// --- update our Form component so it's called when a user clicks the Cancel button. --- //////
+
 
   //function used to validate a form to ensure there is a student name before calling the onSave function from props
   const validate = () => {
-    if (!student) {
+    if (!student || student === "") {
       setError("Student name cannot be blank");
       return;
-    } else if (!interviewer) {
+    } 
+    else if (!interviewer) {
       setError("Interviewer cannot be blank");
       return;
     }
@@ -41,7 +42,7 @@ export default function Form(props) {
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
         {/* event.preventDefault() prevents the default behavior of pressing the Enter key (refresh the page) */}
-        <form onSubmit={(event) => event.preventDefault()} autoComplete="off">
+        <form autoComplete="off" onSubmit={(event) => event.preventDefault()}>
           <input
             className="appointment__create-input text--semi-bold"
             student="student"
@@ -49,12 +50,11 @@ export default function Form(props) {
             value={student}
             placeholder="Enter Student Name"
             onChange={(event) => setStudent(event.target.value)}
-            // onInput={(e) => setStudent(e.target.value)}
+            data-testid="student-name-input"
           />
         </form>
         <section className="appointment__validation">{error}</section>
         <InterviewerList
-          // interviewers={interviewers}
           interviewers={props.interviewers}
           value={interviewer}
           onChange={setInterviewer}
@@ -62,10 +62,10 @@ export default function Form(props) {
       </section>
       <section className="appointment__card-right">
         <section className="appointment__actions">
-          <Button onClick={cancel} danger>
+          <Button danger onClick={cancel}>
             Cancel
           </Button>
-          <Button onClick={validate} confirm>
+          <Button confirm onClick={validate}>
             Save
           </Button>
         </section>
