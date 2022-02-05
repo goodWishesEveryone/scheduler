@@ -1,14 +1,13 @@
-import { last } from "lodash";
+// Custom Hook that allows us to manage the visual mode of any component; define the modes as constants in our component and then use the Hook to transition forward and back.
+
 import { useState } from "react";
 
 export default function useVisualMode(initial) {
   const [mode, setMode] = useState(initial);
-  const [history, setHistory] = useState([initial]); // This line is new!
-
+  const [history, setHistory] = useState([initial]);
   function transition(mode, replace = false) {
     if(replace) {
       let currHistory = history;
-      // const currMode = history[history.length - 1];
       currHistory[currHistory.length -1] = mode
       setHistory(currHistory) 
       setMode(mode); 
