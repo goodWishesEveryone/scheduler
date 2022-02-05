@@ -23,7 +23,6 @@ export default function useApplicationData() {
   // Promise.all will run many promises concurrently and when all the Promises resolved, it updates the state
   // Axios retrieves data from db to populate Appointments, Interviewers and Days
   useEffect(() => {
-    console.log('called useEffect')
     Promise.all([
       axios.get("/api/days"),
       axios.get("/api/appointments"),
@@ -42,24 +41,23 @@ export default function useApplicationData() {
       });
   }, []);
 
-
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
-      interview: { ...interview }
+      interview: { ...interview },
     };
 
     const appointments = {
       ...state.appointments,
       [id]: appointment,
     };
-    const newDays = updateSpots(state, appointments)
+    const newDays = updateSpots(state, appointments);
 
     return axios.put(`/api/appointments/${id}`, appointment).then((res) => {
       setState({
         ...state,
-        appointments, 
-        days: newDays
+        appointments,
+        days: newDays,
       });
     });
   }
@@ -75,13 +73,13 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment,
     };
-    const newDays = updateSpots(state, appointments)
+    const newDays = updateSpots(state, appointments);
 
     return axios.delete(`/api/appointments/${id}`, appointment).then((res) => {
       setState({
         ...state,
         appointments,
-        days: newDays
+        days: newDays,
       });
     });
   }
