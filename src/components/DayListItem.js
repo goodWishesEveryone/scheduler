@@ -17,11 +17,6 @@ export default function DayListItem(props) {
     }
     return spotsRemaining;
   };
-  // const formatSpots = function(num) {
-  //   if(num === 0) return "no spots remaining";
-  //   if(num === 1) return `${num} spot remaining`;
-  //   if(num > 1) return `${num} spots remaining`;
-  // }
 
   const dayClass = classNames("day-list__item", {
     "day-list__item--selected": selected,

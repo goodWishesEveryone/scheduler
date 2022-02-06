@@ -78,11 +78,10 @@ const getSpotsForDay = function(day, appointments) {
  * Update Spots for current day
  * @param {Object}   state           State Object.
  * @param {Object}   appointments    New Appointments array
- * @param {Object}   id              Optional appointment id 
  * @return {Array}   A Days array we can save back into state.
  */
 
- export function updateSpots(state, appointments, id) {
+ export function updateSpots(state, appointments) {
   // get the day object
   const dayObj = state.days.find(day => day.name === state.day);
   const spots = getSpotsForDay(dayObj, appointments);

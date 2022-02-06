@@ -1,7 +1,8 @@
+// serves as a container to hold all the <DayListItem> components
+
 import React from "react";
 import DayListItem from "components/DayListItem";
 
-// serves as a container to hold all the <DayListItem> components
 export default function DayList(props) {
   const dayList = props.days.map((day) => {
     return (
