@@ -1,20 +1,9 @@
-# Interview Scheduler
+# Interview Scheduler - Stella Maris
 
 
 ## About
 
 Interviewer Scheduler is a React app that allows user to book, edit and cancel an interview appointment with interviewers.  To book an interview appointment, a user can choose an available appointment slot, provide a student name and choose an interviewer.  
-
-
-## Screenshots
-
-![Appointment Form](docs/screenhots/appointment-form.png)
-
-![Booking an Interview](docs/screenhots/book_an_appointment.png)
-
-![Editing an Interview](docs/screenhots/edit_an_appointment.png)
-
-![Deleting an Interview](docs/screenhots/delete_an_appointment.png)
 
 
 ## Setup
@@ -59,5 +48,18 @@ Visit, http://localhost:9009/
 ## Scheduler Project Breakdown
 
 ![Components Map](docs/COMPONENT_MAP.png)
-![State](docs/STATE.md)
+
+![State](docs/STATE.png)
+
 ![Boilerplate](docs/Boilerplate.png)
+
+
+## Final Product
+
+![Screenshot of Appointment Form](https://github.com/goodWishesEveryone/scheduler/blob/master/docs/screenhots/appointment-form.png?raw=true)
+
+![Screenshot when Booking an Interview](https://github.com/goodWishesEveryone/scheduler/blob/master/docs/screenhots/book_an_appointment.png?raw=true)
+
+![Screenshot when Editing an Interview](https://github.com/goodWishesEveryone/scheduler/blob/master/docs/screenhots/edit_an_appointment.png?raw=true)
+
+![Screenshot when Deleting an Interview](https://github.com/goodWishesEveryone/scheduler/blob/master/docs/screenhots/delete_an_appointment.png?raw=true)
