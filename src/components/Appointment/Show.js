@@ -1,5 +1,4 @@
 import React from "react";
-//import "./styles.scss";
 
 //////// --- Show allows a user to see an existing appointment --- ////////
 

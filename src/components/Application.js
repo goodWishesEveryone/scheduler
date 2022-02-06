@@ -17,6 +17,7 @@ function Application(props) {
 
   const appointments = bookAppointments.map((appointment) => {
     const interviewers = getInterviewersForDay(state, state.day);
+
     return (
       <Appointment
         key={appointment.id}

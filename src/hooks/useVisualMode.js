@@ -5,23 +5,19 @@ import { useState } from "react";
 
 export default function useVisualMode(initial) {
   const [mode, setMode] = useState(initial);
-
   const [history, setHistory] = useState([initial]);
-
-  const [history, setHistory] = useState([initial]); 
 
   //////// --- transition --- ////////
   function transition(mode, replace = false) {
-    if(replace) {
+    if (replace) {
       let currHistory = history;
-      currHistory[currHistory.length -1] = mode
-      setHistory(currHistory) 
-      setMode(mode); 
+      currHistory[currHistory.length - 1] = mode;
+      setHistory(currHistory);
+      setMode(mode);
+    } else {
+      setHistory([...history, mode]);
+      setMode(mode);
     }
-   else {
-    setHistory([...history, mode])
-    setMode(mode);
-   }
   }
 
   ////////// --- back --- //////////

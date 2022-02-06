@@ -7,7 +7,8 @@ export default function InterviewerListItem(props) {
   let interviewerClass = classNames("interviewers__item", {
     "interviewers--selected": props.selected,
   });
-  // is run when the InterviewerListItem or the interviewer's avatart is clicked. This function receives the interviewer's id as an argument and it sets the selected interviewer.
+
+  // is run when the InterviewerListItem or the interviewer's avatar is clicked. This function receives the interviewer's id as an argument and it sets the selected interviewer.
   return (
     <li
       className={interviewerClass}
