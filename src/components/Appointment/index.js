@@ -24,9 +24,7 @@ const DELETING = "DELETING";
 
 export default function Appointment(props) {
   const { id, time, interview, interviewers } = props;
-  const { mode, transition, back } = useVisualMode(
-    interview ? SHOW : EMPTY
-  );
+  const { mode, transition, back } = useVisualMode(interview ? SHOW : EMPTY);
 
   //////////////////  -- SAVE --  ///////////////
   function save(name, interviewer) {
@@ -94,10 +92,7 @@ export default function Appointment(props) {
         />
       )}
       {mode === ERROR_SAVE && (
-        <Error 
-          onClose={() => back()} 
-          message={"Could not save appointment."} 
-        />
+        <Error onClose={() => back()} message={"Could not save appointment."} />
       )}
       {mode === ERROR_DELETE && (
         <Error

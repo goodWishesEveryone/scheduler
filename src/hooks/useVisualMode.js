@@ -1,3 +1,4 @@
+
 // Custom Hook that allows us to manage the visual mode of any component; define the modes as constants in our component and then use the Hook to transition forward and back.
 
 import { useState } from "react";
@@ -18,7 +19,7 @@ export default function useVisualMode(initial) {
       setMode(mode);
     }
   }
-  
+
   ////////// --- back --- //////////
   function back() {
     // remove last element from history array
