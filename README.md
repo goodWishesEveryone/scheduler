@@ -1,9 +1,36 @@
 # Interview Scheduler
 
 
+## About
+
+Interviewer Scheduler is a React app that allows user to book, edit and cancel an interview appointment with interviewers.  To book an interview appointment, a user can choose an available appointment slot, provide a student name and choose an interviewer.  
+
+
+## Screenshots
+
+![Appointment Form](docs/screenhots/appointment-form.png)
+
+![Booking an Interview](docs/screenhots/book_an_appointment.png)
+
+![Editing an Interview](docs/screenhots/edit_an_appointment.png)
+
+![Deleting an Interview](docs/screenhots/delete_an_appointment.png)
+
+
 ## Setup
 
 Install dependencies with `npm install`.
+
+### Dependancies
+- axios
+- classnames
+- normalize.css
+- react
+- react-dom
+- react-scripts
+
+Fork and clone the [scheduler-api] (https://github.com/lighthouse-labs/scheduler-api) into a new directory, NOT within our current scheduler directory, and follow the README.md instructions to configure and run the API server.
+
 
 ## Running Webpack Development Server
 
@@ -11,7 +38,8 @@ Install dependencies with `npm install`.
 npm start
 ```
 
-http://localhost:8000/
+Visit, http://localhost:8000/
+
 
 ## Running Jest Test Framework
 
@@ -19,21 +47,17 @@ http://localhost:8000/
 npm test
 ```
 
+
 ## Running Storybook Visual Testbed
 
 ```sh
 npm run storybook
 ```
-http://localhost:9009/ 
+Visit, http://localhost:9009/ 
 
 
 ## Scheduler Project Breakdown
 
-![Components Map](./public/images/COMPONENT_MAP.png)
+![Components Map](docs/COMPONENT_MAP.png)
 
-![State](./STATE.md)
-
-![Components](./COMPONENTS.md)
-
-
-
+![State](docs/STATE.md)
