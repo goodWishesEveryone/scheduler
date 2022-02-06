@@ -30,7 +30,6 @@ it("renders a danger button", () => {
   expect(getByText("Danger")).toHaveClass("button--danger");
 });
 // 5
-// it.skip("renders a clickable button", () => {
 it("renders a clickable button", () => {
 
   const handleClick = jest.fn();
@@ -45,7 +44,6 @@ it("renders a clickable button", () => {
   expect(handleClick).toHaveBeenCalledTimes(1);
 });
 // 6
-//it.skip("renders a disabled button", () => {
 it("renders a disabled button", () => {
   const handleClick = jest.fn();
   const { getByText } = render(
@@ -60,9 +58,11 @@ it("renders a disabled button", () => {
 
   expect(handleClick).toHaveBeenCalledTimes(0);
 });
+// 7
 it("renders without crashing", () => {
   render(<Button />);
 });
+// 8
 it("renders its `children` prop as text", () => {
   const { getByText } = render(<Button>Default</Button>);
   expect(getByText("Default")).toBeInTheDocument();

@@ -4,11 +4,9 @@ import "components/InterviewerListItem.scss";
 
 // a component to render and handle behaviour of individual interviewer items
 export default function InterviewerListItem(props) {
-  // console.log("iLF", props);
   let interviewerClass = classNames("interviewers__item", {
     "interviewers--selected": props.selected,
   });
-  // console.log(props);
   // is run when the InterviewerListItem is clicked. This function receives the interviewer's id as an argument. It sets the selected interviewer.
 
   return (

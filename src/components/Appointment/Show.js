@@ -1,18 +1,15 @@
 import React from "react";
-//import "./styles.scss";
 
 //////// --- Show allows a user to see an existing appointment --- ////////
 
 export default function Show(props) {
-  const { id, student, interviewer, onEdit, onDelete } = props;
-  console.log("Show Component", student, interviewer)
+  const { student, interviewer, onEdit, onDelete } = props;
   return (
     <main className="appointment__card appointment__card--show">
       <section className="appointment__card-left">
         <h2 className="text--regular">{student}</h2>
           <section className="interviewer">
           <h4 className="text--light">Interviewer</h4>
-          {/* <h3 className="text-regular">{interviewer && interviewer.name}</h3> */}
           <h3 className="text--regular">{interviewer.name}</h3>
         </section>
 
@@ -29,7 +26,6 @@ export default function Show(props) {
             className="appointment__actions-button"
             src="images/trash.png"
             alt="Delete"
-            // onClick={onDelete(id)}
             onClick={onDelete}
           />
         </section>

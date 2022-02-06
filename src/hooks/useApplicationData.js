@@ -23,7 +23,6 @@ export default function useApplicationData() {
   // Promise.all will run many promises concurrently and when all the Promises resolved, it updates the state
   // Axios retrieves data from db to populate Appointments, Interviewers and Days
   useEffect(() => {
-    console.log('called useEffect')
     Promise.all([
       axios.get("/api/days"),
       axios.get("/api/appointments"),

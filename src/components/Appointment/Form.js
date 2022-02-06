@@ -10,21 +10,21 @@ export default function Form(props) {
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
   const [error, setError] = useState("");
 
-  //function used to reset the form student and interviewer fields, when the user clicks the Cancel button, it clears the form values
+  // function used to reset the form student and interviewer fields, when the user clicks the Cancel button, it clears the form values
   const reset = () => {
     setStudent("");
     setError("");
     setInterviewer(null);
   };
 
-  //function used to cancel a form submission when a user clicks the cancel button; it calls the reset function and onCancel function from props
+  // function used to cancel a form submission when a user clicks the cancel button; it calls the reset function and onCancel function from props
   const cancel = () => {
     reset();
     props.onCancel();
   };
 
 
-  //function used to validate a form to ensure there is a student name before calling the onSave function from props
+  // function used to validate a form to ensure there is a student name before calling the onSave function from props
   const validate = () => {
     if (!student || student === "") {
       setError("Student name cannot be blank");
@@ -72,4 +72,4 @@ export default function Form(props) {
       </section>
     </main>
   );
-}
+} 

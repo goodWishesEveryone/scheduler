@@ -1,7 +1,6 @@
 // hold all logic for each Appointment components
 
 import React from "react";
-// import React, { useState, useEffect } from "react";
 import "./styles.scss";
 
 import Header from "./Header";
@@ -29,12 +28,8 @@ export default function Appointment(props) {
     interview ? SHOW : EMPTY
   );
 
-  // const student = interview && interview.student ? interview.student : '';
-  // const interviewer = interview && interview.interviewer ? interview.interviewer : null;
-
   //////////////////  -- SAVE --  ///////////////
   function save(name, interviewer) {
-    console.log("INTERVIEWER IN SAVE", interviewer)
     const interview = {
       student: name,
       interviewer,
@@ -58,7 +53,6 @@ export default function Appointment(props) {
       .then(() => transition(EMPTY))
       .catch((error) => transition(ERROR_DELETE, true));
   }
-console.log("this is interview", interview);
   return (
     <article className="appointment">
       <Header time={time} />

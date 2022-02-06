@@ -4,7 +4,6 @@ import Button from "components/Button";
 //////// --- Confirm function allows a user to confirm a destructive action --- ////////
 
 export default function Confirm(props) {
-  // const { message, onConfirm, onCancel } = props;
 
   return (
     <main className="appointment__card appointment__card--confirm">
