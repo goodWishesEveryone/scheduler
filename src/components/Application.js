@@ -17,14 +17,12 @@ function Application(props) {
 
   const appointments = bookAppointments.map((appointment) => {
     const interviewers = getInterviewersForDay(state, state.day);
-    console.log("appointments in map", appointment.interview, appointment.id);
     return (
       <Appointment
         key={appointment.id}
         {...appointment}
         time={appointment.time}
         interview={getInterview(state, appointment.interview)}
-        // interview={appointment.interview}
         interviewers={interviewers}
         bookInterview={bookInterview}
         cancelInterview={cancelInterview}
