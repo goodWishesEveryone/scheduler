@@ -59,5 +59,5 @@ Visit, http://localhost:9009/
 ## Scheduler Project Breakdown
 
 ![Components Map](docs/COMPONENT_MAP.png)
-
 ![State](docs/STATE.md)
+![Boilerplate](docs/Boilerplate.png)
